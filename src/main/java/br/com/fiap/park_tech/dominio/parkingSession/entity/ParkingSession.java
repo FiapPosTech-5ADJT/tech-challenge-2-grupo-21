@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -15,5 +16,8 @@ public class ParkingSession {
     private Vehicle vehicle;
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
+    private Instant createdAt;
+    private Instant updatedAt;
+    private Instant deletedAt;
 
 }

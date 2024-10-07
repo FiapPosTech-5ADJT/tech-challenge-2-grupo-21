@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -16,4 +17,7 @@ public class VehiclePayment {
     private ParkingSession parkingSession;
     private BigDecimal amount;
     private LocalDateTime paymentDate;
+    private Instant createdAt;
+    private Instant updatedAt;
+    private Instant deletedAt;
 }

@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
+
 @AllArgsConstructor
 @Getter
 @Setter
@@ -14,4 +16,7 @@ public class ParkingSlot {
     private boolean available;
     private Vehicle vehicle;
     private ParkingMeter parkingMeter;
+    private Instant createdAt;
+    private Instant updatedAt;
+    private Instant deletedAt;
 }

@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: park-tech
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: secondTechChallengeDB
+      username: mongoadmin
+      password: secret

@@ -1,0 +1,15 @@
+package br.com.fiap.park_tech.service;
+
+import br.com.fiap.park_tech.model.ParkingMeter;
+
+import java.util.Optional;
+
+public interface ParkingMeterService {
+
+    ParkingMeter createParkingMeter(ParkingMeter parkingMeter);
+    Optional<ParkingMeter> getParkingMeterById(Long id);
+    Optional<ParkingMeter> getParkingMeterByName(String name);
+    void deleteParkingMeterById(Long id);
+    ParkingMeter addParkingSlotToParkingMeter(ParkingMeter parkingMeter);
+    ParkingMeter removeParkingSlotFromParkingMeter(ParkingMeter parkingMeter);
+}

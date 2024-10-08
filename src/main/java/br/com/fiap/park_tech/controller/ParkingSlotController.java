@@ -1,4 +1,4 @@
-package br.com.fiap.park_tech.controlller;
+package br.com.fiap.park_tech.controller;
 
 import br.com.fiap.park_tech.model.ParkingSlot;
 import br.com.fiap.park_tech.service.ParkingSlotService;

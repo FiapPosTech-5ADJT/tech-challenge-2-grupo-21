@@ -1,9 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://mongoadmin:secret@localhost:27017/secondTechChallengeDB
-      host: localhost
-      port: 27017
+      uri: mongodb://mongoadmin:secret@localhost:27017/secondTechChallengeDB?authSource=admin
       database: secondTechChallengeDB
       username: mongoadmin
       password: secret

@@ -1,8 +1,7 @@
 spring:
-  application:
-    name: park-tech
   data:
     mongodb:
+      uri: mongodb://mongoadmin:secret@localhost:27017/secondTechChallengeDB
       host: localhost
       port: 27017
       database: secondTechChallengeDB

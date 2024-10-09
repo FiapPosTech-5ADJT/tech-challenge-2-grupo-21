@@ -4,7 +4,7 @@
 
 - Docker
 - Docker Compose
-- JDK 11+
+- JDK 17
 - Maven
 
 ## Configuração do Docker
@@ -15,3 +15,7 @@
 
 ```sh
 docker-compose up -d
+```
+## Documentação da API
+A documentação da API pode ser acessada através do Swagger UI.
+Rota do Swagger UI: http://localhost:8080/swagger-ui/index.html

@@ -1,6 +1,7 @@
 package br.com.fiap.park_tech.controller;
 
 import br.com.fiap.park_tech.controller.docs.ParkingSlotControllerDocs;
+import br.com.fiap.park_tech.dto.ParkingSlotDTO;
 import br.com.fiap.park_tech.model.ParkingSlot;
 import br.com.fiap.park_tech.service.ParkingSlotService;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,8 @@ public class ParkingSlotController implements ParkingSlotControllerDocs {
     private final ParkingSlotService parkingSlotService;
 
     @Override
-    public ResponseEntity<ParkingSlot> createParkingSlot(@RequestBody ParkingSlot parkingSlot) {
-        var createdParkingSlot = parkingSlotService.createParkingSlot(parkingSlot);
+    public ResponseEntity<ParkingSlot> createParkingSlot(@RequestBody ParkingSlotDTO parkingSlotDTO) {
+        var createdParkingSlot = parkingSlotService.createParkingSlot(parkingSlotDTO);
         return ResponseEntity.ok(createdParkingSlot);
     }
 

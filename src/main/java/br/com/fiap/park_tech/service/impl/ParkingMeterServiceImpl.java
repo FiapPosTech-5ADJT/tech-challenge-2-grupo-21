@@ -1,5 +1,6 @@
 package br.com.fiap.park_tech.service.impl;
 
+import br.com.fiap.park_tech.dto.ParkingMeterDTO;
 import br.com.fiap.park_tech.model.ParkingMeter;
 import br.com.fiap.park_tech.repository.ParkingMeterRepository;
 import br.com.fiap.park_tech.exception.ParkingMeterNotFoundException;
@@ -20,8 +21,8 @@ public class ParkingMeterServiceImpl implements ParkingMeterService {
     private final ParkingSlotService parkingSlotService;
 
     @Override
-    public ParkingMeter createParkingMeter(final ParkingMeter parkingMeter) {
-        parkingMeter.setCreatedAt(Instant.now());
+    public ParkingMeter createParkingMeter(final ParkingMeterDTO parkingMeterDTO) {
+        ParkingMeter parkingMeter = ParkingMeter.newParkingMeter(parkingMeterDTO.getName());
         return parkingMeterRepository.save(parkingMeter);
     }
 
@@ -47,7 +48,7 @@ public class ParkingMeterServiceImpl implements ParkingMeterService {
 
     @Override
     public ParkingMeter addParkingSlotToParkingMeter(final ParkingMeter parkingMeter) {
-        var parkingSlot = parkingSlotService.getParkingSlotById(parkingMeter.getId());
+        var parkingSlot = parkingSlotService.getParkingSlotById(null);
         parkingMeter.setUpdatedAt(Instant.now());
         parkingSlot.setUpdatedAt(Instant.now());
         parkingSlot.setParkingMeter(parkingMeter);
@@ -57,7 +58,7 @@ public class ParkingMeterServiceImpl implements ParkingMeterService {
 
     @Override
     public ParkingMeter removeParkingSlotFromParkingMeter(final ParkingMeter parkingMeter) {
-        var parkingSlot = parkingSlotService.getParkingSlotById(parkingMeter.getId());
+        var parkingSlot = parkingSlotService.getParkingSlotById(null);
         parkingMeter.setUpdatedAt(Instant.now());
         parkingSlot.setUpdatedAt(Instant.now());
         parkingSlot.setParkingMeter(null);

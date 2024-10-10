@@ -1,5 +1,6 @@
 package br.com.fiap.park_tech.controller.docs;
 
+import br.com.fiap.park_tech.dto.ParkingMeterDTO;
 import br.com.fiap.park_tech.model.ParkingMeter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -22,7 +23,7 @@ public interface ParkingMeterControllerDocs {
                 content = @Content)
     })
     @PostMapping
-    ResponseEntity<ParkingMeter> createParkingMeter(@RequestBody ParkingMeter parkingMeter);
+    ResponseEntity<ParkingMeter> createParkingMeter(@RequestBody ParkingMeterDTO parkingMeterDTO);
 
     @Operation(summary = "Get a parking meter by ID")
     @ApiResponses(value = {

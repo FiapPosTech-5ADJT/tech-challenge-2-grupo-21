@@ -1,5 +1,6 @@
 package br.com.fiap.park_tech.controller.docs;
 
+import br.com.fiap.park_tech.dto.ParkingSlotDTO;
 import br.com.fiap.park_tech.model.ParkingSlot;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -22,7 +23,7 @@ public interface ParkingSlotControllerDocs {
                 content = @Content)
     })
     @PostMapping
-    ResponseEntity<ParkingSlot> createParkingSlot(@RequestBody ParkingSlot parkingSlot);
+    ResponseEntity<ParkingSlot> createParkingSlot(@RequestBody ParkingSlotDTO parkingSlotDTO);
 
     @Operation(summary = "Delete a parking slot by ID")
     @ApiResponses(value = {

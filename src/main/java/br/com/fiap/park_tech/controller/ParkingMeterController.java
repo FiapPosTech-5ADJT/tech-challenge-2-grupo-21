@@ -1,6 +1,7 @@
 package br.com.fiap.park_tech.controller;
 
 import br.com.fiap.park_tech.controller.docs.ParkingMeterControllerDocs;
+import br.com.fiap.park_tech.dto.ParkingMeterDTO;
 import br.com.fiap.park_tech.exception.ParkingMeterNotFoundException;
 import br.com.fiap.park_tech.model.ParkingMeter;
 import br.com.fiap.park_tech.service.ParkingMeterService;
@@ -16,8 +17,8 @@ public class ParkingMeterController implements ParkingMeterControllerDocs {
     private final ParkingMeterService parkingMeterService;
 
     @Override
-    public ResponseEntity<ParkingMeter> createParkingMeter(@RequestBody ParkingMeter parkingMeter) {
-        ParkingMeter createdParkingMeter = parkingMeterService.createParkingMeter(parkingMeter);
+    public ResponseEntity<ParkingMeter> createParkingMeter(@RequestBody ParkingMeterDTO parkingMeterDTO) {
+        ParkingMeter createdParkingMeter = parkingMeterService.createParkingMeter(parkingMeterDTO);
         return ResponseEntity.ok(createdParkingMeter);
     }
 

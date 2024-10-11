@@ -19,7 +19,7 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
 
     @Override
     public ParkingSlot createParkingSlot(ParkingSlotDTO parkingSlotDTO) {
-      ParkingMeter parkingMeter = parkingMeterRepository.findById(Long.parseLong(parkingSlotDTO.getParkingMeterId()))
+      ParkingMeter parkingMeter = parkingMeterRepository.findById(parkingSlotDTO.getParkingMeterId())
         .orElseThrow(() -> new RuntimeException("Parking Meter not found"));
       ParkingSlot parkingSlot = ParkingSlot.newParkingSlot(parkingSlotDTO, parkingMeter);
       return parkingSlotRepository.save(parkingSlot);

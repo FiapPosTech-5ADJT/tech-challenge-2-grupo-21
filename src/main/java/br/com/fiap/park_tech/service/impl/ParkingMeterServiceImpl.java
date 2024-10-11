@@ -27,7 +27,7 @@ public class ParkingMeterServiceImpl implements ParkingMeterService {
     }
 
     @Override
-    public Optional<ParkingMeter> getParkingMeterById(final Long id) {
+    public Optional<ParkingMeter> getParkingMeterById(final String id) {
         return parkingMeterRepository.findById(id);
     }
 
@@ -38,7 +38,7 @@ public class ParkingMeterServiceImpl implements ParkingMeterService {
     }
 
     @Override
-    public void deleteParkingMeterById(final Long id) {
+    public void deleteParkingMeterById(final String id) {
         var parkingMeter = getParkingMeterById(id).orElseThrow(() -> new ParkingMeterNotFoundException(String.valueOf(id)));
         if (parkingMeter.getDeletedAt() == null) {
             parkingMeter.setDeletedAt(Instant.now());

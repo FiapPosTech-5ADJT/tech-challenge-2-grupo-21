@@ -23,14 +23,14 @@ public class ParkingMeterController implements ParkingMeterControllerDocs {
     }
 
     @Override
-    public ResponseEntity<ParkingMeter> getParkingMeterById(@PathVariable Long id) {
+    public ResponseEntity<ParkingMeter> getParkingMeterById(@PathVariable String id) {
         ParkingMeter parkingMeter = parkingMeterService.getParkingMeterById(id)
                 .orElseThrow(() -> new ParkingMeterNotFoundException(String.valueOf(id)));
         return ResponseEntity.ok(parkingMeter);
     }
 
     @Override
-    public ResponseEntity<Void> deleteParkingMeterById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteParkingMeterById(@PathVariable String id) {
         parkingMeterService.deleteParkingMeterById(id);
         return ResponseEntity.noContent().build();
     }

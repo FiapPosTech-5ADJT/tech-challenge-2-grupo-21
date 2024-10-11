@@ -34,7 +34,7 @@ public interface ParkingMeterControllerDocs {
                 content = @Content)
     })
     @GetMapping("/{id}")
-    ResponseEntity<ParkingMeter> getParkingMeterById(@PathVariable Long id);
+    ResponseEntity<ParkingMeter> getParkingMeterById(@PathVariable String id);
 
     @Operation(summary = "Delete a parking meter by ID")
     @ApiResponses(value = {
@@ -44,5 +44,5 @@ public interface ParkingMeterControllerDocs {
                 content = @Content)
     })
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteParkingMeterById(@PathVariable Long id);
+    ResponseEntity<Void> deleteParkingMeterById(@PathVariable String id);
 }

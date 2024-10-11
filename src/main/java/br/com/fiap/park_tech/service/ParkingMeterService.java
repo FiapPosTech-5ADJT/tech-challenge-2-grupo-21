@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface ParkingMeterService {
 
     ParkingMeter createParkingMeter(ParkingMeterDTO parkingMeterDTO);
-    Optional<ParkingMeter> getParkingMeterById(Long id);
+    Optional<ParkingMeter> getParkingMeterById(String id);
     Optional<ParkingMeter> getParkingMeterByName(String name);
-    void deleteParkingMeterById(Long id);
+    void deleteParkingMeterById(String id);
     ParkingMeter addParkingSlotToParkingMeter(ParkingMeter parkingMeter);
     ParkingMeter removeParkingSlotFromParkingMeter(ParkingMeter parkingMeter);
 }

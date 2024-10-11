@@ -9,6 +9,5 @@ public interface ParkingSlotService {
     ParkingSlot getParkingSlotById(String parkingSlotId);
     ParkingSlot getParkingSlotByVehicleId(String vehicleId);
     ParkingSlot removeVehicleFromParkingSlot(String parkingSlotId);
-
-
+    ParkingSlot addVehicleToParkingSlot(String parkingSlotId);
 }

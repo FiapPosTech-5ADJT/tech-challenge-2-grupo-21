@@ -7,7 +7,6 @@ import br.com.fiap.park_tech.repository.ParkingMeterRepository;
 import br.com.fiap.park_tech.repository.ParkingSlotRepository;
 import br.com.fiap.park_tech.service.ParkingSlotService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,6 +44,14 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
     @Override
     public ParkingSlot removeVehicleFromParkingSlot(String parkingSlotId) {
         ParkingSlot parkingSlot = getParkingSlotById(parkingSlotId);
+        parkingSlot.setAvailable(true);
+        return parkingSlotRepository.save(parkingSlot);
+    }
+
+    @Override
+    public ParkingSlot addVehicleToParkingSlot(String parkingSlotId) {
+        ParkingSlot parkingSlot = getParkingSlotById(parkingSlotId);
+        parkingSlot.setAvailable(false);
         return parkingSlotRepository.save(parkingSlot);
     }
 }

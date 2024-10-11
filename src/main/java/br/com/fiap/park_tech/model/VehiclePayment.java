@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 public class VehiclePayment {
     @Id
-    private Long id;
+    private String id;
     private ParkingSession parkingSession;
     private BigDecimal amount;
     private LocalDateTime paymentDate;

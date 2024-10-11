@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 public class ParkingSession {
     @Id
-    private Long id;
+    private String id;
     private Vehicle vehicle;
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;

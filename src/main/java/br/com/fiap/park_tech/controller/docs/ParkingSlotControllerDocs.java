@@ -33,7 +33,7 @@ public interface ParkingSlotControllerDocs {
                 content = @Content)
     })
     @DeleteMapping("/{parkingSlotId}")
-    ResponseEntity<Void> deleteParkingSlotById(@PathVariable Long parkingSlotId);
+    ResponseEntity<Void> deleteParkingSlotById(@PathVariable String parkingSlotId);
 
     @Operation(summary = "Get a parking slot by ID")
     @ApiResponses(value = {
@@ -44,7 +44,7 @@ public interface ParkingSlotControllerDocs {
                 content = @Content)
     })
     @GetMapping("/{parkingSlotId}")
-    ResponseEntity<ParkingSlot> getParkingSlotById(@PathVariable Long parkingSlotId);
+    ResponseEntity<ParkingSlot> getParkingSlotById(@PathVariable String parkingSlotId);
 
     @Operation(summary = "Get a parking slot by vehicle ID")
     @ApiResponses(value = {
@@ -55,7 +55,7 @@ public interface ParkingSlotControllerDocs {
                 content = @Content)
     })
     @GetMapping("/vehicle/{vehicleId}")
-    ResponseEntity<ParkingSlot> getParkingSlotByVehicleId(@PathVariable Long vehicleId);
+    ResponseEntity<ParkingSlot> getParkingSlotByVehicleId(@PathVariable String vehicleId);
 
     @Operation(summary = "Remove a vehicle from a parking slot")
     @ApiResponses(value = {
@@ -66,5 +66,5 @@ public interface ParkingSlotControllerDocs {
                 content = @Content)
     })
     @PutMapping("/remove-vehicle/{parkingSlotId}")
-    ResponseEntity<ParkingSlot> removeVehicleFromParkingSlot(@PathVariable Long parkingSlotId);
+    ResponseEntity<ParkingSlot> removeVehicleFromParkingSlot(@PathVariable String parkingSlotId);
 }

@@ -5,10 +5,10 @@ import br.com.fiap.park_tech.model.ParkingSlot;
 
 public interface ParkingSlotService {
     ParkingSlot createParkingSlot(ParkingSlotDTO parkingSlotDTO);
-    void deleteParkingSlotById(Long parkingSlotId);
-    ParkingSlot getParkingSlotById(Long parkingSlotId);
-    ParkingSlot getParkingSlotByVehicleId(Long vehicleId);
-    ParkingSlot removeVehicleFromParkingSlot(Long parkingSlotId);
+    void deleteParkingSlotById(String parkingSlotId);
+    ParkingSlot getParkingSlotById(String parkingSlotId);
+    ParkingSlot getParkingSlotByVehicleId(String vehicleId);
+    ParkingSlot removeVehicleFromParkingSlot(String parkingSlotId);
 
 
 }

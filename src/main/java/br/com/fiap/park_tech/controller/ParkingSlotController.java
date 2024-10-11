@@ -22,25 +22,25 @@ public class ParkingSlotController implements ParkingSlotControllerDocs {
     }
 
     @Override
-    public ResponseEntity<Void> deleteParkingSlotById(@PathVariable Long parkingSlotId) {
+    public ResponseEntity<Void> deleteParkingSlotById(@PathVariable String parkingSlotId) {
         parkingSlotService.deleteParkingSlotById(parkingSlotId);
         return ResponseEntity.noContent().build();
     }
 
     @Override
-    public ResponseEntity<ParkingSlot> getParkingSlotById(@PathVariable Long parkingSlotId) {
+    public ResponseEntity<ParkingSlot> getParkingSlotById(@PathVariable String parkingSlotId) {
         var parkingSlot = parkingSlotService.getParkingSlotById(parkingSlotId);
         return ResponseEntity.ok(parkingSlot);
     }
 
     @Override
-    public ResponseEntity<ParkingSlot> getParkingSlotByVehicleId(@PathVariable Long vehicleId) {
+    public ResponseEntity<ParkingSlot> getParkingSlotByVehicleId(@PathVariable String vehicleId) {
         var parkingSlot = parkingSlotService.getParkingSlotByVehicleId(vehicleId);
         return ResponseEntity.ok(parkingSlot);
     }
 
     @Override
-    public ResponseEntity<ParkingSlot> removeVehicleFromParkingSlot(@PathVariable Long parkingSlotId) {
+    public ResponseEntity<ParkingSlot> removeVehicleFromParkingSlot(@PathVariable String parkingSlotId) {
         var parkingSlot = parkingSlotService.removeVehicleFromParkingSlot(parkingSlotId);
         return ResponseEntity.ok(parkingSlot);
     }

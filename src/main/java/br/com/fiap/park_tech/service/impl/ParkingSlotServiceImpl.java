@@ -26,24 +26,24 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
     }
 
     @Override
-    public void deleteParkingSlotById(Long parkingSlotId) {
+    public void deleteParkingSlotById(String parkingSlotId) {
         parkingSlotRepository.deleteById(parkingSlotId);
     }
 
     @Override
-    public ParkingSlot getParkingSlotById(Long parkingSlotId) {
+    public ParkingSlot getParkingSlotById(String parkingSlotId) {
         return parkingSlotRepository.findById(parkingSlotId)
                 .orElseThrow(() -> new RuntimeException("Parking slot not found"));
     }
 
     @Override
-    public ParkingSlot getParkingSlotByVehicleId(Long vehicleId) {
+    public ParkingSlot getParkingSlotByVehicleId(String vehicleId) {
         //return parkingSlotRepository.findByVehicleId(vehicleId).orElseThrow(() -> new RuntimeException("Parking slot not found for vehicle"));
       return  null;
     }
 
     @Override
-    public ParkingSlot removeVehicleFromParkingSlot(Long parkingSlotId) {
+    public ParkingSlot removeVehicleFromParkingSlot(String parkingSlotId) {
         ParkingSlot parkingSlot = getParkingSlotById(parkingSlotId);
         return parkingSlotRepository.save(parkingSlot);
     }

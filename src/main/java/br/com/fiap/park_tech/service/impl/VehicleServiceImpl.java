@@ -6,9 +6,11 @@ import br.com.fiap.park_tech.repository.VehicleRepository;
 import br.com.fiap.park_tech.service.VehicleService;
 import br.com.fiap.park_tech.exception.VehiclerNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
+@Service
 @RequiredArgsConstructor
 public class VehicleServiceImpl implements VehicleService {
     private final VehicleRepository vehicleRepository;

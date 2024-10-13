@@ -36,12 +36,6 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
     }
 
     @Override
-    public ParkingSlot getParkingSlotByVehicleId(String vehicleId) {
-        //return parkingSlotRepository.findByVehicleId(vehicleId).orElseThrow(() -> new RuntimeException("Parking slot not found for vehicle"));
-      return  null;
-    }
-
-    @Override
     public ParkingSlot removeVehicleFromParkingSlot(String parkingSlotId) {
         ParkingSlot parkingSlot = getParkingSlotById(parkingSlotId);
         parkingSlot.setAvailable(true);

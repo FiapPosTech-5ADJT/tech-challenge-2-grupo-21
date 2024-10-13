@@ -34,12 +34,6 @@ public class ParkingSlotController implements ParkingSlotControllerDocs {
     }
 
     @Override
-    public ResponseEntity<ParkingSlot> getParkingSlotByVehicleId(@PathVariable String vehicleId) {
-        var parkingSlot = parkingSlotService.getParkingSlotByVehicleId(vehicleId);
-        return ResponseEntity.ok(parkingSlot);
-    }
-
-    @Override
     public ResponseEntity<ParkingSlot> removeVehicleFromParkingSlot(@PathVariable String parkingSlotId) {
         var parkingSlot = parkingSlotService.removeVehicleFromParkingSlot(parkingSlotId);
         return ResponseEntity.ok(parkingSlot);

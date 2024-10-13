@@ -46,17 +46,6 @@ public interface ParkingSlotControllerDocs {
     @GetMapping("/{parkingSlotId}")
     ResponseEntity<ParkingSlot> getParkingSlotById(@PathVariable String parkingSlotId);
 
-    @Operation(summary = "Get a parking slot by vehicle ID")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Found the parking slot",
-                content = { @Content(mediaType = "application/json",
-                schema = @Schema(implementation = ParkingSlot.class)) }),
-        @ApiResponse(responseCode = "404", description = "Parking slot not found",
-                content = @Content)
-    })
-    @GetMapping("/vehicle/{vehicleId}")
-    ResponseEntity<ParkingSlot> getParkingSlotByVehicleId(@PathVariable String vehicleId);
-
     @Operation(summary = "Remove a vehicle from a parking slot")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Vehicle removed from parking slot successfully",

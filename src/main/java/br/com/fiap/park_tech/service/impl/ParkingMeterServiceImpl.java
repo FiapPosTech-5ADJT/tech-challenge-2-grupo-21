@@ -9,12 +9,16 @@ import br.com.fiap.park_tech.service.ParkingSlotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ParkingMeterServiceImpl implements ParkingMeterService {
+
+    private static final double PARKING_METER_COST_FIST_HOUR = 7.0;
+    private static final double PARKING_METER_COST_ADDITIONAL_HOUR = 3.0;
 
     private final ParkingMeterRepository parkingMeterRepository;
 
@@ -65,4 +69,13 @@ public class ParkingMeterServiceImpl implements ParkingMeterService {
         parkingMeter.getParkingSlots().remove(parkingSlot);
         return parkingMeterRepository.save(parkingMeter);
     }
+
+    @Override
+    public BigDecimal calculateTotalAmount(int hours) {
+        if (hours == 1 || hours == 0) {
+            return BigDecimal.valueOf(PARKING_METER_COST_FIST_HOUR);
+        }
+        return BigDecimal.valueOf(PARKING_METER_COST_FIST_HOUR + (PARKING_METER_COST_ADDITIONAL_HOUR * (hours - 1)));
+    }
+
 }

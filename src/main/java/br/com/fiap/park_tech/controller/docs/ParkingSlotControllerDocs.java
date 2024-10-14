@@ -1,6 +1,7 @@
 package br.com.fiap.park_tech.controller.docs;
 
 import br.com.fiap.park_tech.dto.ParkingSlotDTO;
+import br.com.fiap.park_tech.dto.ParkingSlotResponseDTO;
 import br.com.fiap.park_tech.model.ParkingSlot;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,6 +11,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "Parking Slot Controller", description = "Operations related to parking slots")
 public interface ParkingSlotControllerDocs {
@@ -23,7 +26,7 @@ public interface ParkingSlotControllerDocs {
                 content = @Content)
     })
     @PostMapping
-    ResponseEntity<ParkingSlot> createParkingSlot(@RequestBody ParkingSlotDTO parkingSlotDTO);
+    ResponseEntity<ParkingSlotResponseDTO> createParkingSlot(@RequestBody ParkingSlotDTO parkingSlotDTO);
 
     @Operation(summary = "Delete a parking slot by ID")
     @ApiResponses(value = {
@@ -39,32 +42,30 @@ public interface ParkingSlotControllerDocs {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Found the parking slot",
                 content = { @Content(mediaType = "application/json",
-                schema = @Schema(implementation = ParkingSlot.class)) }),
+                schema = @Schema(implementation = ParkingSlotResponseDTO.class)) }),
         @ApiResponse(responseCode = "404", description = "Parking slot not found",
                 content = @Content)
     })
     @GetMapping("/{parkingSlotId}")
-    ResponseEntity<ParkingSlot> getParkingSlotById(@PathVariable String parkingSlotId);
+    ResponseEntity<ParkingSlotResponseDTO> getParkingSlotById(@PathVariable String parkingSlotId);
 
-    @Operation(summary = "Get a parking slot by vehicle ID")
+    @Operation(summary = "List all parking slots")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Found the parking slot",
-                content = { @Content(mediaType = "application/json",
-                schema = @Schema(implementation = ParkingSlot.class)) }),
-        @ApiResponse(responseCode = "404", description = "Parking slot not found",
-                content = @Content)
+      @ApiResponse(responseCode = "200", description = "List of all parking slots",
+        content = { @Content(mediaType = "application/json",
+          schema = @Schema(implementation = ParkingSlotResponseDTO.class)) })
     })
-    @GetMapping("/vehicle/{vehicleId}")
-    ResponseEntity<ParkingSlot> getParkingSlotByVehicleId(@PathVariable String vehicleId);
+    @GetMapping
+    ResponseEntity<List<ParkingSlotResponseDTO>> listAllParkingSlots();
 
-    @Operation(summary = "Remove a vehicle from a parking slot")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Vehicle removed from parking slot successfully",
-                content = { @Content(mediaType = "application/json",
-                schema = @Schema(implementation = ParkingSlot.class)) }),
-        @ApiResponse(responseCode = "404", description = "Parking slot not found",
-                content = @Content)
-    })
-    @PutMapping("/remove-vehicle/{parkingSlotId}")
-    ResponseEntity<ParkingSlot> removeVehicleFromParkingSlot(@PathVariable String parkingSlotId);
+  @Operation(summary = "Get parking slots by parking meter ID")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "List of parking slots for the given parking meter ID",
+      content = { @Content(mediaType = "application/json",
+        schema = @Schema(implementation = ParkingSlotResponseDTO.class)) }),
+    @ApiResponse(responseCode = "404", description = "Parking meter not found",
+      content = @Content)
+  })
+  @GetMapping("/by-parking-meter/{parkingMeterId}")
+  ResponseEntity<List<ParkingSlotResponseDTO>> getParkingSlotsByParkingMeterId(@PathVariable String parkingMeterId);
 }

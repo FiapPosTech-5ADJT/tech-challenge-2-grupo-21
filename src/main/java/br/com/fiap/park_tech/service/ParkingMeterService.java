@@ -1,16 +1,16 @@
 package br.com.fiap.park_tech.service;
 
 import br.com.fiap.park_tech.dto.ParkingMeterDTO;
+import br.com.fiap.park_tech.dto.ParkingMeterResponseDTO;
 import br.com.fiap.park_tech.model.ParkingMeter;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface ParkingMeterService {
 
-    ParkingMeter createParkingMeter(ParkingMeterDTO parkingMeterDTO);
-    Optional<ParkingMeter> getParkingMeterById(String id);
-    Optional<ParkingMeter> getParkingMeterByName(String name);
+    ParkingMeterResponseDTO createParkingMeter(ParkingMeterDTO parkingMeterDTO);
+    ParkingMeterResponseDTO getParkingMeterById(String id);
+    ParkingMeterResponseDTO getParkingMeterByName(String name);
+    List<ParkingMeterResponseDTO> getAllParkingMeters();
     void deleteParkingMeterById(String id);
-    ParkingMeter addParkingSlotToParkingMeter(ParkingMeter parkingMeter);
-    ParkingMeter removeParkingSlotFromParkingMeter(ParkingMeter parkingMeter);
 }

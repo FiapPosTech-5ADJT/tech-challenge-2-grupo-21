@@ -13,6 +13,9 @@ import br.com.fiap.park_tech.repository.ParkingSessionRepository;
 import br.com.fiap.park_tech.repository.ParkingSlotRepository;
 import br.com.fiap.park_tech.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +28,6 @@ import java.util.Optional;
 public class ParkingSessionServiceImpl implements ParkingSessionService {
     private final ParkingSessionRepository parkingSessionRepository;
     private final VehicleService vehicleService;
-    private final ParkingSlotService parkingSlotService;
     private final ParkingMeterService parkingMeterService;
     private VehiclePaymentService vehiclePaymentService;
     private final ParkingSlotRepository parkingSlotRepository;
@@ -34,7 +36,6 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
     public ParkingSessionServiceImpl(ParkingSessionRepository parkingSessionRepository, VehicleService vehicleService, ParkingSlotService parkingSlotService, ParkingMeterService parkingMeterService,  ParkingSlotRepository parkingSlotRepository) {
         this.parkingSessionRepository = parkingSessionRepository;
         this.vehicleService = vehicleService;
-        this.parkingSlotService = parkingSlotService;
         this.parkingMeterService = parkingMeterService;
         this.parkingSlotRepository = parkingSlotRepository;
     }
@@ -45,6 +46,7 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
     }
 
     @Override
+    @CachePut(value = "parkingSessions", key = "#result.id")
     public ParkingSession createParkingSession(ParkingSessionDTO parkingSessionDTO) {
         var vehicle = vehicleService.getVehicleByLicensePlate(parkingSessionDTO.getVehicleLicensePlate());
         Optional<ParkingSlot> parkingSlot = parkingSlotRepository.findById(parkingSessionDTO.getParkingSlotId());
@@ -62,21 +64,25 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
     }
 
     @Override
+    @Cacheable(value = "parkingSessions", key = "#parkingSessionId")
     public ParkingSession getParkingSessionById(String parkingSessionId) {
         return parkingSessionRepository.findById(parkingSessionId).orElseThrow(() -> new ParkingSessionNotFoundException(parkingSessionId));
     }
 
     @Override
+    @Cacheable(value = "parkingSessions", key = "#vehicleId")
     public ParkingSession getParkingSessionByVehicleId(String vehicleId) {
         return parkingSessionRepository.findByVehicleId(vehicleId).orElseThrow(() -> new ParkingSessionNotFoundException(vehicleId));
     }
 
     @Override
+    @CacheEvict(value = "parkingSessions", key = "#parkingSessionId")
     public void deleteParkingSessionById(String parkingSessionId) {
         parkingSessionRepository.deleteById(parkingSessionId);
     }
 
     @Override
+    @CacheEvict(value = "parkingSessions", key = "#parkingSessionDTO.getParkingSlotId()")
     public ParkingSession endParkingSession(ParkingSessionDTO parkingSessionDTO, String paymentMethod) {
         var parkingSession = getParkingSessionById(parkingSessionDTO.getParkingSlotId());
         parkingSession.setCheckOut(LocalDateTime.now());

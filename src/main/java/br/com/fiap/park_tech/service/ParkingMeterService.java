@@ -2,9 +2,8 @@ package br.com.fiap.park_tech.service;
 
 import br.com.fiap.park_tech.dto.ParkingMeterDTO;
 import br.com.fiap.park_tech.dto.ParkingMeterResponseDTO;
-import br.com.fiap.park_tech.model.ParkingMeter;
-
 import java.util.List;
+import java.math.BigDecimal;
 
 public interface ParkingMeterService {
 
@@ -13,4 +12,5 @@ public interface ParkingMeterService {
     ParkingMeterResponseDTO getParkingMeterByName(String name);
     List<ParkingMeterResponseDTO> getAllParkingMeters();
     void deleteParkingMeterById(String id);
+    BigDecimal calculateTotalAmount(int hours);
 }

@@ -10,10 +10,7 @@ public interface ParkingSlotService {
     ParkingSlotResponseDTO createParkingSlot(ParkingSlotDTO parkingSlotDTO);
     void deleteParkingSlotById(String parkingSlotId);
     ParkingSlotResponseDTO getParkingSlotById(String parkingSlotId);
-    ParkingSlot getParkingSlotByVehicleId(String vehicleId);
     List<ParkingSlotResponseDTO> listAllParkingSlots();
-    ParkingSlot removeVehicleFromParkingSlot(String parkingSlotId);
-    ParkingSlot addVehicleToParkingSlot(String parkingSlotId);
     List<ParkingSlotResponseDTO> getParkingSlotsByParkingMeterId(String parkingMeterId);
 
 }

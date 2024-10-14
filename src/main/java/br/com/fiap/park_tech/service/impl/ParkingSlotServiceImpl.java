@@ -50,32 +50,12 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
         return parkingSlotMapper.toResponseDTO(parkingSlot);
     }
 
-    @Override
-    public ParkingSlot getParkingSlotByVehicleId(String vehicleId) {
-        //return parkingSlotRepository.findByVehicleId(vehicleId).orElseThrow(() -> new RuntimeException("Parking slot not found for vehicle"));
-      return  null;
-    }
-
   @Override
   public List<ParkingSlotResponseDTO> listAllParkingSlots() {
     return parkingSlotRepository.findAll().stream()
       .map(parkingSlotMapper::toResponseDTO)
       .collect(Collectors.toList());
   }
-
-  @Override
-    public ParkingSlot removeVehicleFromParkingSlot(String parkingSlotId) {
-        ParkingSlot parkingSlot = new ParkingSlot();
-        parkingSlot.setAvailable(true);
-        return parkingSlotRepository.save(parkingSlot);
-    }
-
-    @Override
-    public ParkingSlot addVehicleToParkingSlot(String parkingSlotId) {
-        ParkingSlot parkingSlot = new ParkingSlot();
-        parkingSlot.setAvailable(false);
-        return parkingSlotRepository.save(parkingSlot);
-    }
 
   @Override
   public List<ParkingSlotResponseDTO> getParkingSlotsByParkingMeterId(String parkingMeterId) {

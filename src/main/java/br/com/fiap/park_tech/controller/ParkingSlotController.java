@@ -3,7 +3,6 @@ package br.com.fiap.park_tech.controller;
 import br.com.fiap.park_tech.controller.docs.ParkingSlotControllerDocs;
 import br.com.fiap.park_tech.dto.ParkingSlotDTO;
 import br.com.fiap.park_tech.dto.ParkingSlotResponseDTO;
-import br.com.fiap.park_tech.model.ParkingSlot;
 import br.com.fiap.park_tech.service.ParkingSlotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -47,5 +46,4 @@ public class ParkingSlotController implements ParkingSlotControllerDocs {
       List<ParkingSlotResponseDTO> parkingSlots = parkingSlotService.getParkingSlotsByParkingMeterId(parkingMeterId);
       return ResponseEntity.ok(parkingSlots);
   }
-
 }

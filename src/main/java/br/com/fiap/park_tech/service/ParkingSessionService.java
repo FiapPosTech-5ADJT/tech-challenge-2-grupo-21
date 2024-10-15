@@ -8,5 +8,5 @@ public interface ParkingSessionService {
   ParkingSession getParkingSessionById(String parkingSessionId);
   ParkingSession getParkingSessionByVehicleId(String parkingSessionId);
   void deleteParkingSessionById(String parkingSessionId);
-  ParkingSession endParkingSession(ParkingSessionDTO parkingSession, String paymentMethod);
+  ParkingSession endParkingSession(String parkingSessionId, String paymentMethod);
 }

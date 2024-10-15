@@ -96,9 +96,9 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
     }
 
     @Override
-    @CacheEvict(value = "parkingSessions", key = "#parkingSessionDTO.getParkingSlotId()")
-    public ParkingSession endParkingSession(ParkingSessionDTO parkingSessionDTO, String paymentMethod) {
-        var parkingSession = getParkingSessionById(parkingSessionDTO.getParkingSlotId());
+    @CacheEvict(value = "parkingSessions", key = "#parkingSessionId")
+    public ParkingSession endParkingSession(String parkingSessionId, String paymentMethod) {
+        var parkingSession = getParkingSessionById(parkingSessionId);
         parkingSession.setCheckOut(LocalDateTime.now());
         parkingSession.setUpdatedAt(Instant.now());
         parkingSession.setVehiclePayment(getVehiclePayment(parkingSession, paymentMethod));

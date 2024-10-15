@@ -26,7 +26,7 @@ public class GlobalExceptionHandler extends RuntimeException {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Object> handleEntityNotFoundException(VehiclerNotFoundException ex, WebRequest request) {
+    public ResponseEntity<Object> handleEntityNotFoundException(NotFoundException ex, WebRequest request) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.NOT_FOUND.value());
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler extends RuntimeException {
     }
 
     @ExceptionHandler(ParkingSlotAlreadyOcuppiedException.class)
-    public ResponseEntity<Object> handleParkingSlotAlreadyOccupiedException(EntityAlreadyDeletedException ex, WebRequest request) {
+    public ResponseEntity<Object> handleParkingSlotAlreadyOccupiedException(ParkingSlotAlreadyOcuppiedException ex, WebRequest request) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.GONE.value());

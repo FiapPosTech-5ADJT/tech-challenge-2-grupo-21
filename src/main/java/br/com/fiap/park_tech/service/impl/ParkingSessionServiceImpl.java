@@ -112,7 +112,7 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
 
     private VehiclePayment getVehiclePayment(ParkingSession parkingSession, String paymentMethod) {
         var amount = calculateAmount(parkingSession);
-        var vehiclePaymentDto = new VehiclePaymentDTO(parkingSession.getId(), amount, LocalDateTime.now(), PaymentMethods.valueOf(paymentMethod));
+        var vehiclePaymentDto = new VehiclePaymentDTO(parkingSession.getId(), amount, LocalDateTime.now(), PaymentMethods.fromDescription(paymentMethod));
         return vehiclePaymentService.createVehiclePayment(vehiclePaymentDto);
     }
 

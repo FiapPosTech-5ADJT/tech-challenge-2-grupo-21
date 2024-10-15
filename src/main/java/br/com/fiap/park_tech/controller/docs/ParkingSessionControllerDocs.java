@@ -41,5 +41,5 @@ public interface ParkingSessionControllerDocs {
                     content = @Content)
     })
     @PostMapping("/end")
-    ResponseEntity<ParkingSession> endParkingSession(@RequestParam EndParkingSessionDTO endParkingSessionDTO);
+    ResponseEntity<ParkingSession> endParkingSession(@RequestBody EndParkingSessionDTO endParkingSessionDTO);
 }

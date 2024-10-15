@@ -12,5 +12,17 @@ services:
     volumes:
       - mongo-data:/data/db
 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring-boot-app
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongoadmin:secret@mongodb:27017/secondTechChallengeDB?authSource=admin
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongodb
+
 volumes:
   mongo-data:

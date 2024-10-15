@@ -2,8 +2,8 @@ package br.com.fiap.park_tech.controller;
 
 import br.com.fiap.park_tech.controller.docs.VehicleControllerDocs;
 import br.com.fiap.park_tech.dto.VehicleDTO;
-import br.com.fiap.park_tech.dto.VehicleResponseDTO;
-import br.com.fiap.park_tech.model.ParkingSlot;
+import br.com.fiap.park_tech.model.Vehicle;
+import br.com.fiap.park_tech.service.VehicleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,18 +14,29 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/vehicles")
 @RequiredArgsConstructor
 public class VehicleController implements VehicleControllerDocs {
+
+    private final VehicleService vehicleService;
     @Override
-    public ResponseEntity<VehicleResponseDTO> createVehicle(@RequestBody VehicleDTO vehicleDTO) {
-        return null;
+    public ResponseEntity<Vehicle> createVehicle(@RequestBody VehicleDTO vehicleDTO) {
+        Vehicle createdVehicle = vehicleService.createVehicle(vehicleDTO);
+        return ResponseEntity.ok(createdVehicle);
     }
 
     @Override
     public ResponseEntity<Void> deleteVehicleById(String vehicleId) {
-        return null;
+        vehicleService.deleteVehicleById(vehicleId);
+        return ResponseEntity.noContent().build();
     }
 
     @Override
-    public ResponseEntity<VehicleResponseDTO> getVehicleById(String VehicleId) {
-        return null;
+    public ResponseEntity<Vehicle> getVehicleById(String VehicleId) {
+        Vehicle vehicle = vehicleService.getVehicleById(VehicleId);
+        return ResponseEntity.ok(vehicle);
+    }
+
+    @Override
+    public ResponseEntity<Vehicle> getVehicleByLicensePlate(String licensePlate) {
+        Vehicle vehicle = vehicleService.getVehicleByLicensePlate(licensePlate);
+        return ResponseEntity.ok(vehicle);
     }
 }

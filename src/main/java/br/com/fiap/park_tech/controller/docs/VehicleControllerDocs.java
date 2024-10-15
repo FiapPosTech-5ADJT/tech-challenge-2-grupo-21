@@ -31,7 +31,7 @@ public interface VehicleControllerDocs {
                 content = @Content)
     })
     @PostMapping
-    ResponseEntity<VehicleResponseDTO> createVehicle(@RequestBody VehicleDTO vehicleDTO);
+    ResponseEntity<Vehicle> createVehicle(@RequestBody VehicleDTO vehicleDTO);
 
     @Operation(summary = "Delete a Vehicle by ID")
     @ApiResponses(value = {
@@ -52,6 +52,16 @@ public interface VehicleControllerDocs {
                 content = @Content)
     })
     @GetMapping("/{VehicleId}")
-    ResponseEntity<VehicleResponseDTO> getVehicleById(@PathVariable String VehicleId);
+    ResponseEntity<Vehicle> getVehicleById(@PathVariable String VehicleId);
 
+    @Operation(summary = "Get a vehicle License Plate")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Found the vehicle",
+                content = { @Content(mediaType = "application/json",
+                schema = @Schema(implementation = Vehicle.class)) }),
+        @ApiResponse(responseCode = "404", description = "Vehicle not found",
+                content = @Content)
+    })
+    @GetMapping("/{licensePlate}")
+    ResponseEntity<Vehicle> getVehicleByLicensePlate(String licensePlate);
 }

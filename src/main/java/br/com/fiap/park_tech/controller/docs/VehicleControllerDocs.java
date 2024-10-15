@@ -2,6 +2,7 @@ package br.com.fiap.park_tech.controller.docs;
 
 import br.com.fiap.park_tech.dto.ParkingSlotDTO;
 import br.com.fiap.park_tech.dto.VehicleDTO;
+import br.com.fiap.park_tech.dto.VehicleResponseDTO;
 import br.com.fiap.park_tech.model.ParkingSlot;
 import br.com.fiap.park_tech.model.Vehicle;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,7 +31,7 @@ public interface VehicleControllerDocs {
                 content = @Content)
     })
     @PostMapping
-    ResponseEntity<ParkingSlot> createVehicle(@RequestBody VehicleDTO vehicleDTO);
+    ResponseEntity<VehicleResponseDTO> createVehicle(@RequestBody VehicleDTO vehicleDTO);
 
     @Operation(summary = "Delete a Vehicle by ID")
     @ApiResponses(value = {
@@ -51,6 +52,6 @@ public interface VehicleControllerDocs {
                 content = @Content)
     })
     @GetMapping("/{VehicleId}")
-    ResponseEntity<ParkingSlot> getVehicleById(@PathVariable String VehicleId);
+    ResponseEntity<VehicleResponseDTO> getVehicleById(@PathVariable String VehicleId);
 
 }

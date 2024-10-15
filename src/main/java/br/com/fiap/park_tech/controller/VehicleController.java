@@ -2,9 +2,11 @@ package br.com.fiap.park_tech.controller;
 
 import br.com.fiap.park_tech.controller.docs.VehicleControllerDocs;
 import br.com.fiap.park_tech.dto.VehicleDTO;
+import br.com.fiap.park_tech.dto.VehicleResponseDTO;
 import br.com.fiap.park_tech.model.ParkingSlot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class VehicleController implements VehicleControllerDocs {
     @Override
-    public ResponseEntity<ParkingSlot> createVehicle(VehicleDTO vehicleDTO) {
+    public ResponseEntity<VehicleResponseDTO> createVehicle(@RequestBody VehicleDTO vehicleDTO) {
         return null;
     }
 
@@ -23,7 +25,7 @@ public class VehicleController implements VehicleControllerDocs {
     }
 
     @Override
-    public ResponseEntity<ParkingSlot> getVehicleById(String VehicleId) {
+    public ResponseEntity<VehicleResponseDTO> getVehicleById(String VehicleId) {
         return null;
     }
 }

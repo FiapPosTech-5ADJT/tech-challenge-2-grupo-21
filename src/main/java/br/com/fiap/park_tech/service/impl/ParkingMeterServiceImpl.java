@@ -2,6 +2,7 @@ package br.com.fiap.park_tech.service.impl;
 
 import br.com.fiap.park_tech.dto.ParkingMeterDTO;
 import br.com.fiap.park_tech.dto.ParkingMeterResponseDTO;
+import br.com.fiap.park_tech.exception.EntityAlreadyDeletedException;
 import br.com.fiap.park_tech.exception.ParkingMeterNotFoundException;
 import br.com.fiap.park_tech.mapper.ParkingMeterMapper;
 import br.com.fiap.park_tech.model.ParkingMeter;
@@ -41,6 +42,9 @@ public class ParkingMeterServiceImpl implements ParkingMeterService {
     @Cacheable(value = "parkingMeters", key = "#id")
     public ParkingMeterResponseDTO getParkingMeterById(final String id) {
         ParkingMeter parkingMeter = parkingMeterRepository.findById(id).orElseThrow(() -> new ParkingMeterNotFoundException(String.valueOf(id)));
+        if (parkingMeter.getDeletedAt() != null) {
+            throw new EntityAlreadyDeletedException(parkingMeter.getId());
+        }
         return parkingMeterMapper.toResponseDTO(parkingMeter);
 
     }
@@ -49,6 +53,9 @@ public class ParkingMeterServiceImpl implements ParkingMeterService {
     @Cacheable(value = "parkingMeters", key = "#name")
     public ParkingMeterResponseDTO getParkingMeterByName(String name) {
         ParkingMeter parkingMeter = parkingMeterRepository.findByName(name);
+        if (parkingMeter.getDeletedAt() != null) {
+            throw new EntityAlreadyDeletedException(parkingMeter.getId());
+        }
         if (parkingMeter != null) {
             return parkingMeterMapper.toResponseDTO(parkingMeter);
         }

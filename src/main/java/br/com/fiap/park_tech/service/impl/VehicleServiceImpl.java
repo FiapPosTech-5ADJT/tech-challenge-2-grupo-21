@@ -2,6 +2,7 @@ package br.com.fiap.park_tech.service.impl;
 
 import br.com.fiap.park_tech.dto.VehicleDTO;
 import br.com.fiap.park_tech.dto.VehicleResponseDTO;
+import br.com.fiap.park_tech.exception.EntityAlreadyDeletedException;
 import br.com.fiap.park_tech.mapper.VehicleMapper;
 import br.com.fiap.park_tech.model.Vehicle;
 import br.com.fiap.park_tech.repository.VehicleRepository;
@@ -32,6 +33,9 @@ public class VehicleServiceImpl implements VehicleService {
     @Cacheable(value = "vehicles", key = "#vehicleId")
     public VehicleResponseDTO getVehicleById(String vehicleId) {
         Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(() -> new VehiclerNotFoundException(vehicleId));
+        if (vehicle.getDeletedAt() != null) {
+            throw new EntityAlreadyDeletedException(vehicleId);
+        }
         return vehicleMapper.toResponseDTO(vehicle);
     }
 
@@ -39,6 +43,9 @@ public class VehicleServiceImpl implements VehicleService {
     @Cacheable(value = "vehicles", key = "#licensePlate")
     public VehicleResponseDTO getVehicleByLicensePlate(String licensePlate) {
         Vehicle vehicle = vehicleRepository.findByLicensePlate(licensePlate).orElseThrow(() -> new VehiclerNotFoundException(licensePlate));
+        if (vehicle.getDeletedAt() != null) {
+            throw new EntityAlreadyDeletedException(vehicle.getLicensePlate());
+        }
         return vehicleMapper.toResponseDTO(vehicle);
     }
 

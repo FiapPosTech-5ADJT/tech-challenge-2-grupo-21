@@ -4,6 +4,7 @@ import br.com.fiap.park_tech.dto.ParkingSessionDTO;
 import br.com.fiap.park_tech.dto.VehiclePaymentDTO;
 import br.com.fiap.park_tech.dto.VehicleResponseDTO;
 import br.com.fiap.park_tech.enums.PaymentMethods;
+import br.com.fiap.park_tech.exception.EntityAlreadyDeletedException;
 import br.com.fiap.park_tech.exception.ParkingSessionNotFoundException;
 import br.com.fiap.park_tech.exception.parkingSlot.ParkingSlotAlreadyOcuppiedException;
 import br.com.fiap.park_tech.exception.parkingSlot.ParkingSlotNotFoundException;
@@ -71,13 +72,21 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
     @Override
     @Cacheable(value = "parkingSessions", key = "#parkingSessionId")
     public ParkingSession getParkingSessionById(String parkingSessionId) {
-        return parkingSessionRepository.findById(parkingSessionId).orElseThrow(() -> new ParkingSessionNotFoundException(parkingSessionId));
+        ParkingSession parkingSession = parkingSessionRepository.findById(parkingSessionId).orElseThrow(() -> new ParkingSessionNotFoundException(parkingSessionId));
+        if (parkingSession.getDeletedAt() != null) {
+            throw new EntityAlreadyDeletedException(parkingSession.getId());
+        }
+        return parkingSession;
     }
 
     @Override
     @Cacheable(value = "parkingSessions", key = "#vehicleId")
     public ParkingSession getParkingSessionByVehicleId(String vehicleId) {
-        return parkingSessionRepository.findByVehicleId(vehicleId).orElseThrow(() -> new ParkingSessionNotFoundException(vehicleId));
+        ParkingSession parkingSession =parkingSessionRepository.findByVehicleId(vehicleId).orElseThrow(() -> new ParkingSessionNotFoundException(vehicleId));
+        if (parkingSession.getDeletedAt() != null) {
+            throw new EntityAlreadyDeletedException(parkingSession.getId());
+        }
+        return parkingSession;
     }
 
     @Override

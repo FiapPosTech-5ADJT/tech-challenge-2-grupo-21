@@ -1,6 +1,7 @@
 package br.com.fiap.park_tech.service.impl;
 
 import br.com.fiap.park_tech.dto.VehiclePaymentDTO;
+import br.com.fiap.park_tech.exception.EntityAlreadyDeletedException;
 import br.com.fiap.park_tech.exception.VehiclePaymentNotFoundException;
 import br.com.fiap.park_tech.model.ParkingSession;
 import br.com.fiap.park_tech.model.VehiclePayment;
@@ -45,7 +46,11 @@ public class VehiclePaymentServiceImpl implements VehiclePaymentService {
     @Override
     @Cacheable(value = "vehiclePayments", key = "#vehiclePaymentId")
     public VehiclePayment getVehiclePaymentById(String vehiclePaymentId) {
-        return vehiclePaymentRepository.findById(vehiclePaymentId).orElseThrow(() -> new VehiclePaymentNotFoundException(vehiclePaymentId));
+        VehiclePayment vehiclePayment = vehiclePaymentRepository.findById(vehiclePaymentId).orElseThrow(() -> new VehiclePaymentNotFoundException(vehiclePaymentId));
+        if (vehiclePayment.getDeletedAt() != null) {
+            throw new EntityAlreadyDeletedException(vehiclePaymentId);
+        }
+        return vehiclePayment;
     }
 
     @Override

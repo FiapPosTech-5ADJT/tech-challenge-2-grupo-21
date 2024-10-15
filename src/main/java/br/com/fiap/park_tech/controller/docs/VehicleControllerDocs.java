@@ -31,7 +31,7 @@ public interface VehicleControllerDocs {
                 content = @Content)
     })
     @PostMapping
-    ResponseEntity<Vehicle> createVehicle(@RequestBody VehicleDTO vehicleDTO);
+    ResponseEntity<VehicleResponseDTO> createVehicle(@RequestBody VehicleDTO vehicleDTO);
 
     @Operation(summary = "Delete a Vehicle by ID")
     @ApiResponses(value = {
@@ -52,7 +52,7 @@ public interface VehicleControllerDocs {
                 content = @Content)
     })
     @GetMapping("/{VehicleId}")
-    ResponseEntity<Vehicle> getVehicleById(@PathVariable String VehicleId);
+    ResponseEntity<VehicleResponseDTO> getVehicleById(@PathVariable String VehicleId);
 
     @Operation(summary = "Get a vehicle License Plate")
     @ApiResponses(value = {
@@ -62,6 +62,16 @@ public interface VehicleControllerDocs {
         @ApiResponse(responseCode = "404", description = "Vehicle not found",
                 content = @Content)
     })
-    @GetMapping("/{licensePlate}")
-    ResponseEntity<Vehicle> getVehicleByLicensePlate(String licensePlate);
+    @GetMapping("/licensePlate/{licensePlate}")
+    ResponseEntity<VehicleResponseDTO> getVehicleByLicensePlate(String licensePlate);
+
+    @Operation(summary = "Delete a Vehicle by License Plate")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Vehicle deleted successfully",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Vehicle not found",
+                    content = @Content)
+    })
+    @DeleteMapping("/licensePlate/{licensePlate}")
+    ResponseEntity<Void> deleteVehicleByLicensePlate(@PathVariable String licensePlate);
 }

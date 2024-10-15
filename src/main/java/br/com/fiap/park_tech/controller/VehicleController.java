@@ -2,6 +2,7 @@ package br.com.fiap.park_tech.controller;
 
 import br.com.fiap.park_tech.controller.docs.VehicleControllerDocs;
 import br.com.fiap.park_tech.dto.VehicleDTO;
+import br.com.fiap.park_tech.dto.VehicleResponseDTO;
 import br.com.fiap.park_tech.model.Vehicle;
 import br.com.fiap.park_tech.service.VehicleService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class VehicleController implements VehicleControllerDocs {
 
     private final VehicleService vehicleService;
     @Override
-    public ResponseEntity<Vehicle> createVehicle(@RequestBody VehicleDTO vehicleDTO) {
-        Vehicle createdVehicle = vehicleService.createVehicle(vehicleDTO);
+    public ResponseEntity<VehicleResponseDTO> createVehicle(@RequestBody VehicleDTO vehicleDTO) {
+        VehicleResponseDTO createdVehicle = vehicleService.createVehicle(vehicleDTO);
         return ResponseEntity.ok(createdVehicle);
     }
 
@@ -29,14 +30,22 @@ public class VehicleController implements VehicleControllerDocs {
     }
 
     @Override
-    public ResponseEntity<Vehicle> getVehicleById(String VehicleId) {
-        Vehicle vehicle = vehicleService.getVehicleById(VehicleId);
+    public ResponseEntity<VehicleResponseDTO> getVehicleById(String VehicleId) {
+        VehicleResponseDTO vehicle = vehicleService.getVehicleById(VehicleId);
         return ResponseEntity.ok(vehicle);
     }
 
     @Override
-    public ResponseEntity<Vehicle> getVehicleByLicensePlate(String licensePlate) {
-        Vehicle vehicle = vehicleService.getVehicleByLicensePlate(licensePlate);
+    public ResponseEntity<VehicleResponseDTO> getVehicleByLicensePlate(String licensePlate) {
+        VehicleResponseDTO vehicle = vehicleService.getVehicleByLicensePlate(licensePlate);
         return ResponseEntity.ok(vehicle);
     }
+
+    @Override
+    public ResponseEntity<Void> deleteVehicleByLicensePlate(String licensePlate) {
+        vehicleService.deleteVehicleByLicensePlate(licensePlate);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

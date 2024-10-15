@@ -2,12 +2,15 @@ package br.com.fiap.park_tech.service.impl;
 
 import br.com.fiap.park_tech.dto.ParkingSessionDTO;
 import br.com.fiap.park_tech.dto.VehiclePaymentDTO;
+import br.com.fiap.park_tech.dto.VehicleResponseDTO;
 import br.com.fiap.park_tech.enums.PaymentMethods;
 import br.com.fiap.park_tech.exception.ParkingSessionNotFoundException;
 import br.com.fiap.park_tech.exception.parkingSlot.ParkingSlotAlreadyOcuppiedException;
 import br.com.fiap.park_tech.exception.parkingSlot.ParkingSlotNotFoundException;
+import br.com.fiap.park_tech.mapper.VehicleMapper;
 import br.com.fiap.park_tech.model.ParkingSession;
 import br.com.fiap.park_tech.model.ParkingSlot;
+import br.com.fiap.park_tech.model.Vehicle;
 import br.com.fiap.park_tech.model.VehiclePayment;
 import br.com.fiap.park_tech.repository.ParkingSessionRepository;
 import br.com.fiap.park_tech.repository.ParkingSlotRepository;
@@ -31,13 +34,15 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
     private final ParkingMeterService parkingMeterService;
     private VehiclePaymentService vehiclePaymentService;
     private final ParkingSlotRepository parkingSlotRepository;
+    private final VehicleMapper vehicleMapper;
 
     @Autowired
-    public ParkingSessionServiceImpl(ParkingSessionRepository parkingSessionRepository, VehicleService vehicleService, ParkingSlotService parkingSlotService, ParkingMeterService parkingMeterService,  ParkingSlotRepository parkingSlotRepository) {
+    public ParkingSessionServiceImpl(ParkingSessionRepository parkingSessionRepository, VehicleService vehicleService, ParkingSlotService parkingSlotService, ParkingMeterService parkingMeterService, ParkingSlotRepository parkingSlotRepository, VehicleMapper vehicleMapper) {
         this.parkingSessionRepository = parkingSessionRepository;
         this.vehicleService = vehicleService;
         this.parkingMeterService = parkingMeterService;
         this.parkingSlotRepository = parkingSlotRepository;
+        this.vehicleMapper = vehicleMapper;
     }
 
     @Autowired
@@ -48,7 +53,7 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
     @Override
     @CachePut(value = "parkingSessions", key = "#result.id")
     public ParkingSession createParkingSession(ParkingSessionDTO parkingSessionDTO) {
-        var vehicle = vehicleService.getVehicleByLicensePlate(parkingSessionDTO.getVehicleLicensePlate());
+        VehicleResponseDTO vehicle = vehicleService.getVehicleByLicensePlate(parkingSessionDTO.getVehicleLicensePlate());
         Optional<ParkingSlot> parkingSlot = parkingSlotRepository.findById(parkingSessionDTO.getParkingSlotId());
         if (parkingSlot.isEmpty()) {
             throw new ParkingSlotNotFoundException(parkingSessionDTO.getParkingSlotId());
@@ -56,10 +61,10 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
         if (!parkingSlot.get().isAvailable()) {
             throw new ParkingSlotAlreadyOcuppiedException(parkingSessionDTO.getParkingSlotId());
         }
-        // marcar como ocupado
         parkingSlot.get().setAvailable(false);
         parkingSlotRepository.save(parkingSlot.get());
-        var newParkingSession = ParkingSession.newParkingSession(vehicle, parkingSlot.orElse(null), null);
+        Vehicle vehicle1 = vehicleMapper.toEntity(vehicle);
+        var newParkingSession = ParkingSession.newParkingSession(vehicleMapper.toEntity(vehicle), parkingSlot.orElse(null), null);
         return parkingSessionRepository.save(newParkingSession);
     }
 

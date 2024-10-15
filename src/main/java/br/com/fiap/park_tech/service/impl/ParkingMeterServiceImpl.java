@@ -34,7 +34,7 @@ public class ParkingMeterServiceImpl implements ParkingMeterService {
     public ParkingMeterResponseDTO createParkingMeter(final ParkingMeterDTO parkingMeterDTO) {
         ParkingMeter parkingMeter = ParkingMeter.newParkingMeter(parkingMeterDTO.getName());
         ParkingMeter parkingMeterSaved = parkingMeterRepository.save(parkingMeter);
-        return parkingMeterMapper.toResponseDTO(parkingMeter);
+        return parkingMeterMapper.toResponseDTO(parkingMeterSaved);
     }
 
     @Override

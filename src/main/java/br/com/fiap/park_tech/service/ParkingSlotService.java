@@ -1,13 +1,16 @@
 package br.com.fiap.park_tech.service;
 
 import br.com.fiap.park_tech.dto.ParkingSlotDTO;
+import br.com.fiap.park_tech.dto.ParkingSlotResponseDTO;
 import br.com.fiap.park_tech.model.ParkingSlot;
 
+import java.util.List;
+
 public interface ParkingSlotService {
-    ParkingSlot createParkingSlot(ParkingSlotDTO parkingSlotDTO);
+    ParkingSlotResponseDTO createParkingSlot(ParkingSlotDTO parkingSlotDTO);
     void deleteParkingSlotById(String parkingSlotId);
-    ParkingSlot getParkingSlotById(String parkingSlotId);
-    ParkingSlot getParkingSlotByVehicleId(String vehicleId);
-    ParkingSlot removeVehicleFromParkingSlot(String parkingSlotId);
-    ParkingSlot addVehicleToParkingSlot(String parkingSlotId);
+    ParkingSlotResponseDTO getParkingSlotById(String parkingSlotId);
+    List<ParkingSlotResponseDTO> listAllParkingSlots();
+    List<ParkingSlotResponseDTO> getParkingSlotsByParkingMeterId(String parkingMeterId);
+
 }

@@ -1,74 +1,111 @@
 package br.com.fiap.park_tech.service.impl;
 
 import br.com.fiap.park_tech.dto.ParkingSessionDTO;
+import br.com.fiap.park_tech.dto.VehiclePaymentDTO;
+import br.com.fiap.park_tech.enums.PaymentMethods;
 import br.com.fiap.park_tech.exception.ParkingSessionNotFoundException;
 import br.com.fiap.park_tech.exception.parkingSlot.ParkingSlotAlreadyOcuppiedException;
 import br.com.fiap.park_tech.exception.parkingSlot.ParkingSlotNotFoundException;
 import br.com.fiap.park_tech.model.ParkingSession;
+import br.com.fiap.park_tech.model.ParkingSlot;
 import br.com.fiap.park_tech.model.VehiclePayment;
 import br.com.fiap.park_tech.repository.ParkingSessionRepository;
-import br.com.fiap.park_tech.service.ParkingSessionService;
-import br.com.fiap.park_tech.service.ParkingSlotService;
-import br.com.fiap.park_tech.service.VehicleService;
-import lombok.AllArgsConstructor;
+import br.com.fiap.park_tech.repository.ParkingSlotRepository;
+import br.com.fiap.park_tech.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
-@AllArgsConstructor
+@Service
 public class ParkingSessionServiceImpl implements ParkingSessionService {
     private final ParkingSessionRepository parkingSessionRepository;
     private final VehicleService vehicleService;
-    private final ParkingSlotService parkingSlotService;
+    private final ParkingMeterService parkingMeterService;
+    private VehiclePaymentService vehiclePaymentService;
+    private final ParkingSlotRepository parkingSlotRepository;
+
+    @Autowired
+    public ParkingSessionServiceImpl(ParkingSessionRepository parkingSessionRepository, VehicleService vehicleService, ParkingSlotService parkingSlotService, ParkingMeterService parkingMeterService,  ParkingSlotRepository parkingSlotRepository) {
+        this.parkingSessionRepository = parkingSessionRepository;
+        this.vehicleService = vehicleService;
+        this.parkingMeterService = parkingMeterService;
+        this.parkingSlotRepository = parkingSlotRepository;
+    }
+
+    @Autowired
+    public void setVehiclePaymentService(@Lazy VehiclePaymentService vehiclePaymentService) {
+        this.vehiclePaymentService = vehiclePaymentService;
+    }
 
     @Override
+    @CachePut(value = "parkingSessions", key = "#result.id")
     public ParkingSession createParkingSession(ParkingSessionDTO parkingSessionDTO) {
         var vehicle = vehicleService.getVehicleByLicensePlate(parkingSessionDTO.getVehicleLicensePlate());
-        var parkingSlot = parkingSlotService.getParkingSlotById(parkingSessionDTO.getParkingSlotId());
-        if (parkingSlot == null) {
+        Optional<ParkingSlot> parkingSlot = parkingSlotRepository.findById(parkingSessionDTO.getParkingSlotId());
+        if (parkingSlot.isEmpty()) {
             throw new ParkingSlotNotFoundException(parkingSessionDTO.getParkingSlotId());
         }
-        if(!parkingSlot.isAvailable()) {
+        if (!parkingSlot.get().isAvailable()) {
             throw new ParkingSlotAlreadyOcuppiedException(parkingSessionDTO.getParkingSlotId());
         }
-        parkingSlotService.addVehicleToParkingSlot(parkingSessionDTO.getParkingSlotId());
-        var newParkingSession = ParkingSession.newParkingSession(vehicle, parkingSlot, null);
+        // marcar como ocupado
+        parkingSlot.get().setAvailable(false);
+        parkingSlotRepository.save(parkingSlot.get());
+        var newParkingSession = ParkingSession.newParkingSession(vehicle, parkingSlot.orElse(null), null);
         return parkingSessionRepository.save(newParkingSession);
     }
 
     @Override
+    @Cacheable(value = "parkingSessions", key = "#parkingSessionId")
     public ParkingSession getParkingSessionById(String parkingSessionId) {
         return parkingSessionRepository.findById(parkingSessionId).orElseThrow(() -> new ParkingSessionNotFoundException(parkingSessionId));
     }
 
     @Override
+    @Cacheable(value = "parkingSessions", key = "#vehicleId")
     public ParkingSession getParkingSessionByVehicleId(String vehicleId) {
         return parkingSessionRepository.findByVehicleId(vehicleId).orElseThrow(() -> new ParkingSessionNotFoundException(vehicleId));
     }
 
     @Override
+    @CacheEvict(value = "parkingSessions", key = "#parkingSessionId")
     public void deleteParkingSessionById(String parkingSessionId) {
         parkingSessionRepository.deleteById(parkingSessionId);
     }
 
     @Override
-    public ParkingSession endParkingSession(ParkingSessionDTO parkingSessionDTO) {
+    @CacheEvict(value = "parkingSessions", key = "#parkingSessionDTO.getParkingSlotId()")
+    public ParkingSession endParkingSession(ParkingSessionDTO parkingSessionDTO, String paymentMethod) {
         var parkingSession = getParkingSessionById(parkingSessionDTO.getParkingSlotId());
         parkingSession.setCheckOut(LocalDateTime.now());
         parkingSession.setUpdatedAt(Instant.now());
-        parkingSession.setVehiclePayment(getVehiclePayment(parkingSession));
-        parkingSlotService.removeVehicleFromParkingSlot(parkingSession.getParkingSlot().getId());
+        parkingSession.setVehiclePayment(getVehiclePayment(parkingSession, paymentMethod));
+
+        Optional<ParkingSlot> parkingSlot = parkingSlotRepository.findById(parkingSession.getParkingSlot().getId());
+        // marcar como disponível
+        parkingSlot.get().setAvailable(false);
+        parkingSlotRepository.save(parkingSlot.get());
         return parkingSessionRepository.save(parkingSession);
     }
 
-    private VehiclePayment getVehiclePayment(ParkingSession parkingSession) {
+    private VehiclePayment getVehiclePayment(ParkingSession parkingSession, String paymentMethod) {
+        var amount = calculateAmount(parkingSession);
+        var vehiclePaymentDto = new VehiclePaymentDTO(parkingSession.getId(), amount, LocalDateTime.now(), PaymentMethods.valueOf(paymentMethod));
+        return vehiclePaymentService.createVehiclePayment(vehiclePaymentDto);
+    }
+
+    private BigDecimal calculateAmount(ParkingSession parkingSession) {
         var checkIn = parkingSession.getCheckIn();
         var checkOut = parkingSession.getCheckOut();
         var duration = checkOut.getHour() - checkIn.getHour();
-        //TODO: calculate amount based on duration and parking slot price
-        //var amount = parkingSession.getParkingSlot()
-        var amount = BigDecimal.valueOf(10);
-        return VehiclePayment.newVehiclePayment(parkingSession, amount, LocalDateTime.now());
+        return parkingMeterService.calculateTotalAmount(duration);
     }
 }

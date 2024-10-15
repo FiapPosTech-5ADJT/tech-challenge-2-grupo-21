@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,12 +19,12 @@ import java.time.Instant;
 public class ParkingSlot {
     @Id
     private String  id;
-    private String setSlotName;
+    private String slotName;
     private boolean available;
     private ParkingMeter parkingMeter;
-    private Instant createdAt;
-    private Instant updatedAt;
-    private Instant deletedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
   public static ParkingSlot newParkingSlot(ParkingSlotDTO dto, ParkingMeter parkingMeter) {
     return  new ParkingSlot(
@@ -31,8 +32,8 @@ public class ParkingSlot {
       dto.getSlotName(),
       true, // available
       parkingMeter,
-      Instant.now(), // createdAt
-      Instant.now(), // updatedAt
+      LocalDateTime.now(), // createdAt
+      LocalDateTime.now(), // updatedAt
       null // deletedAt
     );
   }

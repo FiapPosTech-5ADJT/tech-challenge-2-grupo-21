@@ -19,8 +19,10 @@ services:
     container_name: spring-boot-app
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongoadmin:secret@mongodb:27017/secondTechChallengeDB?authSource=admin
+      JAVA_OPTS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
     ports:
       - 8080:8080
+      - 5005:5005
     depends_on:
       - mongodb
 

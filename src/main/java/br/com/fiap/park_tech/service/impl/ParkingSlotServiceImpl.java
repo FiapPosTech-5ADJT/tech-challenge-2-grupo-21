@@ -2,6 +2,7 @@ package br.com.fiap.park_tech.service.impl;
 
 import br.com.fiap.park_tech.dto.ParkingSlotDTO;
 import br.com.fiap.park_tech.dto.ParkingSlotResponseDTO;
+import br.com.fiap.park_tech.exception.EntityAlreadyDeletedException;
 import br.com.fiap.park_tech.exception.parkingSlot.ParkingSlotNotFoundException;
 import br.com.fiap.park_tech.mapper.ParkingSlotMapper;
 import br.com.fiap.park_tech.model.ParkingMeter;
@@ -52,6 +53,9 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
     public ParkingSlotResponseDTO getParkingSlotById(String parkingSlotId) {
         ParkingSlot parkingSlot = parkingSlotRepository.findById(parkingSlotId)
                 .orElseThrow(() -> new RuntimeException("Parking slot not found"));
+        if (parkingSlot.getDeletedAt() != null) {
+            throw new EntityAlreadyDeletedException(parkingSlotId);
+        }
         return parkingSlotMapper.toResponseDTO(parkingSlot);
     }
 

@@ -1,6 +1,7 @@
 package br.com.fiap.park_tech.controller;
 
 import br.com.fiap.park_tech.controller.docs.ParkingSessionControllerDocs;
+import br.com.fiap.park_tech.dto.EndParkingSessionDTO;
 import br.com.fiap.park_tech.dto.ParkingSessionDTO;
 import br.com.fiap.park_tech.model.ParkingSession;
 import br.com.fiap.park_tech.service.ParkingSessionService;
@@ -17,13 +18,13 @@ public class ParkingSessionController implements ParkingSessionControllerDocs {
 
     @Override
     public ResponseEntity<ParkingSession> createParkingSession(ParkingSessionDTO parkingSessionDTO) {
-      ParkingSession createdSession = parkingSessionService.createParkingSession(parkingSessionDTO);
-      return new ResponseEntity<>(createdSession, HttpStatus.CREATED);
+        ParkingSession createdSession = parkingSessionService.createParkingSession(parkingSessionDTO);
+        return new ResponseEntity<>(createdSession, HttpStatus.CREATED);
     }
 
-  @Override
-  public ResponseEntity<ParkingSession> endParkingSession(ParkingSessionDTO parkingSessionDTO, String paymentMethod) {
-      ParkingSession createdSession = parkingSessionService.endParkingSession(parkingSessionDTO, paymentMethod);
-      return new ResponseEntity<>(createdSession, HttpStatus.CREATED);
-  }
+    @Override
+    public ResponseEntity<ParkingSession> endParkingSession(EndParkingSessionDTO endParkingSessionDTO) {
+        ParkingSession createdSession = parkingSessionService.endParkingSession(endParkingSessionDTO.getParkingSessionId(), endParkingSessionDTO.getPaymentMethod());
+        return new ResponseEntity<>(createdSession, HttpStatus.CREATED);
+    }
 }

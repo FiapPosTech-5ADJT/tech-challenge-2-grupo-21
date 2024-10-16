@@ -11,13 +11,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/vehicles")
 @RequiredArgsConstructor
 public class VehicleController implements VehicleControllerDocs {
 
     private final VehicleService vehicleService;
-    @Override
+
+  @Override
+  public ResponseEntity<List<VehicleResponseDTO>> getAllVehicles() {
+    List<VehicleResponseDTO> vehicles = vehicleService.getAllVehicles();
+    return ResponseEntity.ok(vehicles);
+  }
+
+  @Override
     public ResponseEntity<VehicleResponseDTO> createVehicle(@RequestBody VehicleDTO vehicleDTO) {
         VehicleResponseDTO createdVehicle = vehicleService.createVehicle(vehicleDTO);
         return ResponseEntity.ok(createdVehicle);

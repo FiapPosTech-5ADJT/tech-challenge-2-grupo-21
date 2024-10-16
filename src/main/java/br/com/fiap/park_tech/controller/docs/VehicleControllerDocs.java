@@ -19,8 +19,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 @Tag(name = "Vehicle Controller", description = "Operations related to vehicles")
 public interface VehicleControllerDocs {
+
+  @Operation(summary = "Get all vehicles")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "List of all vehicles",
+      content = { @Content(mediaType = "application/json",
+        schema = @Schema(implementation = VehicleResponseDTO.class)) })
+  })
+  @GetMapping("/all")
+  ResponseEntity<List<VehicleResponseDTO>> getAllVehicles();
 
     @Operation(summary = "Create a new vehicle")
     @ApiResponses(value = {
@@ -74,4 +85,5 @@ public interface VehicleControllerDocs {
     })
     @DeleteMapping("/licensePlate/{licensePlate}")
     ResponseEntity<Void> deleteVehicleByLicensePlate(@PathVariable String licensePlate);
+
 }

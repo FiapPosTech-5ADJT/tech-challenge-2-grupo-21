@@ -5,10 +5,13 @@ import br.com.fiap.park_tech.dto.VehicleResponseDTO;
 import br.com.fiap.park_tech.model.Vehicle;
 import org.springframework.cache.annotation.CacheEvict;
 
+import java.util.List;
+
 public interface VehicleService {
     VehicleResponseDTO createVehicle(VehicleDTO vehicle);
     VehicleResponseDTO getVehicleById(String vehicleId);
     VehicleResponseDTO getVehicleByLicensePlate(String licensePlate);
     void deleteVehicleById(String vehicleId);
     void deleteVehicleByLicensePlate(String licensePlate);
+    List<VehicleResponseDTO> getAllVehicles();
 }

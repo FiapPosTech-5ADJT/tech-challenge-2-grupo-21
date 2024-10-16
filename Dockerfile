@@ -22,7 +22,7 @@ WORKDIR /app
 COPY --from=build /app/target/park_tech.jar app.jar
 
 # Make port 8080 available to the world outside this container
-EXPOSE 8080
+EXPOSE 8080 5005
 
 # Run the jar file
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"]

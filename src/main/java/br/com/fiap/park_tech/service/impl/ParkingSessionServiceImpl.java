@@ -4,6 +4,7 @@ import br.com.fiap.park_tech.dto.ParkingSessionDTO;
 import br.com.fiap.park_tech.dto.VehiclePaymentDTO;
 import br.com.fiap.park_tech.dto.VehicleResponseDTO;
 import br.com.fiap.park_tech.enums.PaymentMethods;
+import br.com.fiap.park_tech.exception.EntityAlreadyDeletedException;
 import br.com.fiap.park_tech.exception.ParkingSessionNotFoundException;
 import br.com.fiap.park_tech.exception.parkingSlot.ParkingSlotAlreadyOcuppiedException;
 import br.com.fiap.park_tech.exception.parkingSlot.ParkingSlotNotFoundException;
@@ -71,25 +72,17 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
     @Override
     @Cacheable(value = "parkingSessions", key = "#parkingSessionId")
     public ParkingSession getParkingSessionById(String parkingSessionId) {
-        return parkingSessionRepository.findById(parkingSessionId).orElseThrow(() -> new ParkingSessionNotFoundException(parkingSessionId));
-    }
-
-    @Override
-    @Cacheable(value = "parkingSessions", key = "#vehicleId")
-    public ParkingSession getParkingSessionByVehicleId(String vehicleId) {
-        return parkingSessionRepository.findByVehicleId(vehicleId).orElseThrow(() -> new ParkingSessionNotFoundException(vehicleId));
+        ParkingSession parkingSession = parkingSessionRepository.findById(parkingSessionId).orElseThrow(() -> new ParkingSessionNotFoundException(parkingSessionId));
+        if (parkingSession.getDeletedAt() != null) {
+            throw new EntityAlreadyDeletedException(parkingSession.getId());
+        }
+        return parkingSession;
     }
 
     @Override
     @CacheEvict(value = "parkingSessions", key = "#parkingSessionId")
-    public void deleteParkingSessionById(String parkingSessionId) {
-        parkingSessionRepository.deleteById(parkingSessionId);
-    }
-
-    @Override
-    @CacheEvict(value = "parkingSessions", key = "#parkingSessionDTO.getParkingSlotId()")
-    public ParkingSession endParkingSession(ParkingSessionDTO parkingSessionDTO, String paymentMethod) {
-        var parkingSession = getParkingSessionById(parkingSessionDTO.getParkingSlotId());
+    public ParkingSession endParkingSession(String parkingSessionId, String paymentMethod) {
+        var parkingSession = getParkingSessionById(parkingSessionId);
         parkingSession.setCheckOut(LocalDateTime.now());
         parkingSession.setUpdatedAt(Instant.now());
         parkingSession.setVehiclePayment(getVehiclePayment(parkingSession, paymentMethod));
@@ -103,7 +96,7 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
 
     private VehiclePayment getVehiclePayment(ParkingSession parkingSession, String paymentMethod) {
         var amount = calculateAmount(parkingSession);
-        var vehiclePaymentDto = new VehiclePaymentDTO(parkingSession.getId(), amount, LocalDateTime.now(), PaymentMethods.valueOf(paymentMethod));
+        var vehiclePaymentDto = new VehiclePaymentDTO(parkingSession.getId(), amount, LocalDateTime.now(), PaymentMethods.fromDescription(paymentMethod));
         return vehiclePaymentService.createVehiclePayment(vehiclePaymentDto);
     }
 

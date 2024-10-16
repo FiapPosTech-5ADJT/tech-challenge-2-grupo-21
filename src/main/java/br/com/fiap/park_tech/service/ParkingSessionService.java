@@ -6,7 +6,5 @@ import br.com.fiap.park_tech.model.ParkingSession;
 public interface ParkingSessionService {
   ParkingSession createParkingSession(ParkingSessionDTO parkingSession);
   ParkingSession getParkingSessionById(String parkingSessionId);
-  ParkingSession getParkingSessionByVehicleId(String parkingSessionId);
-  void deleteParkingSessionById(String parkingSessionId);
-  ParkingSession endParkingSession(ParkingSessionDTO parkingSession, String paymentMethod);
+  ParkingSession endParkingSession(String parkingSessionId, String paymentMethod);
 }

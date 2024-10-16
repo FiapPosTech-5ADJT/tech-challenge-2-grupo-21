@@ -23,8 +23,8 @@ public class VehiclePaymentController implements VehiclePaymentControllerDocs {
     }
 
     @Override
-    public ResponseEntity<List<VehiclePaymentResponseDTO>> getVehiclePaymentsByVehicleId(String vehicleId) {
-        List<VehiclePaymentResponseDTO> payments = vehiclePaymentService.getVehiclePaymentsByVehicleId(vehicleId);
+    public ResponseEntity<List<VehiclePaymentResponseDTO>> getVehiclePaymentsByVehicleId(String licensePlate) {
+        List<VehiclePaymentResponseDTO> payments = vehiclePaymentService.getVehiclePaymentsByVehicleId(licensePlate);
         return ResponseEntity.ok(payments);
     }
 }

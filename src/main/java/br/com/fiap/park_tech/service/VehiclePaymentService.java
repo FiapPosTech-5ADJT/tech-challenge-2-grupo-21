@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface VehiclePaymentService {
     VehiclePayment createVehiclePayment(VehiclePaymentDTO vehiclePayment);
-    VehiclePayment getVehiclePaymentById(String vehiclePaymentId);
-    void deleteVehiclePaymentById(String vehiclePaymentId);
     List<VehiclePaymentResponseDTO> getAllVehiclePayments();
     List<VehiclePaymentResponseDTO> getVehiclePaymentsByVehicleId(String vehicleId);
 }

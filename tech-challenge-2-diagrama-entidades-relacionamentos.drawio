@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36" version="24.7.5">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36" version="24.7.17">
   <diagram name="Página-1" id="ig8KjyHs0qCuxi0rivch">
     <mxGraphModel dx="1380" dy="793" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
       <root>
@@ -19,14 +19,14 @@
         <mxCell id="4gxdVQXfUw_5gOebGeQH-9" value="&lt;span style=&quot;font-weight: 400;&quot;&gt;ParkingSlot&lt;/span&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="314" y="187" width="160" height="147" as="geometry" />
         </mxCell>
-        <mxCell id="4gxdVQXfUw_5gOebGeQH-10" value="Long idVaga&lt;div&gt;boolean isOcupada&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ParkingMeter parkingMeter&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="4gxdVQXfUw_5gOebGeQH-9" vertex="1">
+        <mxCell id="4gxdVQXfUw_5gOebGeQH-10" value="Long idVaga&lt;div&gt;String Slotname&lt;br&gt;&lt;div&gt;boolean isOcupada&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ParkingMeter parkingMeter&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="4gxdVQXfUw_5gOebGeQH-9" vertex="1">
           <mxGeometry y="26" width="160" height="121" as="geometry" />
         </mxCell>
         <mxCell id="zqKUZTCvSpV1XlvEpJfU-1" value="Vehicle&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="614" y="225" width="160" height="128" as="geometry" />
+          <mxGeometry x="614" y="225" width="192" height="128" as="geometry" />
         </mxCell>
-        <mxCell id="zqKUZTCvSpV1XlvEpJfU-2" value="Long idVehicle&lt;div&gt;String licensePlate&lt;/div&gt;&lt;div&gt;List&amp;lt;ParkingSession&amp;gt; ls&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="zqKUZTCvSpV1XlvEpJfU-1" vertex="1">
-          <mxGeometry y="26" width="160" height="102" as="geometry" />
+        <mxCell id="zqKUZTCvSpV1XlvEpJfU-2" value="Long idVehicle&lt;div&gt;String licensePlate&lt;/div&gt;&lt;div&gt;List&amp;lt;ParkingSession&amp;gt; sessions&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="zqKUZTCvSpV1XlvEpJfU-1" vertex="1">
+          <mxGeometry y="26" width="192" height="102" as="geometry" />
         </mxCell>
         <mxCell id="zqKUZTCvSpV1XlvEpJfU-13" value="VehiclePayment " style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="58" y="465" width="197" height="145" as="geometry" />

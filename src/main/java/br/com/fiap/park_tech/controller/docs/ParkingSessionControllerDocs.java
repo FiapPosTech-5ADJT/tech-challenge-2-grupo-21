@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Parking Session Controller", description = "Operations related to parking sessions")
+//@Tag(name = "Parking Session Controller", description = "Operations related to parking sessions")
 public interface ParkingSessionControllerDocs {
 
     @Operation(summary = "Create a new parking session")
